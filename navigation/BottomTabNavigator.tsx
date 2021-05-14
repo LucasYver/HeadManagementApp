@@ -1,35 +1,43 @@
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { useThemeColor } from '../components/Themed';
+import DetailPlatformsScreen from '../screens/PlatformsScreen/DetailPlatformsScreen';
+import HomePlatformsScreen from '../screens/PlatformsScreen/HomePlatformsScreen';
+import ReportingScreen from '../screens/ReportingScreen';
+import { BottomTabParamList, PlatformsParamList, ReportingParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const useTheme = useThemeColor();
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName='Reporting'
+      tabBarOptions={{
+        activeTintColor: useTheme.secondary,
+        inactiveTintColor: useTheme.text,
+        tabStyle: {
+          backgroundColor: useTheme.primary,
+        },
+        style: { backgroundColor: useTheme.primary },
+      }}
+    >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name='Reporting'
+        component={ReportingNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='account-balance' color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name='Platforms'
+        component={PlatformsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='account-balance-wallet' color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -38,36 +46,66 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof MaterialIcons>['name'];
+  color: string;
+}) {
+  return <MaterialIcons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const ReportingStack = createStackNavigator<ReportingParamList>();
 
-function TabOneNavigator() {
+function ReportingNavigator() {
+  const useTheme = useThemeColor();
+
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <ReportingStack.Navigator>
+      <ReportingStack.Screen
+        name='ReportingScreen'
+        component={ReportingScreen}
+        options={{
+          // headerTitle: 'Tab One Title',
+          headerStyle: { backgroundColor: useTheme.primary },
+          headerTitleStyle: {
+            color: useTheme.third,
+          },
+        }}
       />
-    </TabOneStack.Navigator>
+    </ReportingStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const PlatformsScreen = createStackNavigator<PlatformsParamList>();
 
-function TabTwoNavigator() {
+function PlatformsNavigator() {
+  const useTheme = useThemeColor();
+
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <PlatformsScreen.Navigator>
+      <PlatformsScreen.Screen
+        name='HomePlatformsScreen'
+        component={HomePlatformsScreen}
+        options={{
+          // headerTitle: 'Tab Two Title',
+          headerStyle: { backgroundColor: useTheme.primary },
+          headerTitleStyle: {
+            color: useTheme.third,
+          },
+        }}
       />
-    </TabTwoStack.Navigator>
+      <PlatformsScreen.Screen
+        name='DetailPlatformsScreen'
+        component={DetailPlatformsScreen}
+        options={{
+          // headerTitle: 'Tab Two Title',
+          headerStyle: { backgroundColor: useTheme.primary },
+          headerTitleStyle: {
+            color: useTheme.third,
+          },
+        }}
+      />
+    </PlatformsScreen.Navigator>
   );
 }

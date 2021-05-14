@@ -1,34 +1,37 @@
 export const primaryLight = '#313a4d';
-const grey = '#96a0b5';
-const green = '#82ce62';
+const green = '#23e000';
 const burgundy = '#be4868';
-const orange = '#f2a94f';
+const red = '#FF3131';
 
 export default {
   light: {
-    text: '#313a4d',
-    background: '#f1f2f6',
+    primary: '#000',
+    secondary: '#e57d45',
+    third: '#FFF',
+    grey: '#242424',
+    title: '#FFF',
+    text: '#585858',
     activeTint: '#979A9A',
     inactiveTint: '#fff',
-    primary: primaryLight,
-    card: '#fff',
-    grey,
+    card: '#242424',
     green,
     burgundy,
-    orange,
+    red,
     summaryTitle: 'rgba(60,68,86,.7019607843137254)',
   },
   dark: {
-    text: '#fff',
-    background: '#f1f2f6',
+    primary: '#000',
+    secondary: '#e57d45',
+    third: '#FFF',
+    grey: '#242424',
+    title: '#FFF',
+    text: '#585858',
     activeTint: '#979A9A',
     inactiveTint: '#fff',
-    primary: primaryLight,
-    card: '#000',
-    grey,
+    card: '#242424',
     green,
     burgundy,
-    orange,
+    red,
     summaryTitle: 'rgba(60,68,86,.7019607843137254)',
   },
 };

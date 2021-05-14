@@ -74,5 +74,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/no-unescaped-entities': 'off',
     'no-use-before-define': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

@@ -1,19 +1,27 @@
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { heightSize, widthSize } from '../../constants';
 import { useThemeColor } from '../Themed';
 
-type cardType = {
+type cardType = ({
   height: number;
-} & View['props'];
+  component?: React.ComponentType;
+  style?: object;
+} & View['props']) &
+  TouchableOpacity['props'];
 
-const Card = (props: cardType) => {
+const Card: React.FC<cardType> = ({ height, component, style, ...props }) => {
   const useTheme = useThemeColor();
-  const { height } = props;
+
+  const Container = component ?? View;
+
   return (
-    <View
-      style={[styles.container, { backgroundColor: useTheme.card, minHeight: heightSize(height) }]}
+    <Container
+      style={[
+        styles.container,
+        { ...style, backgroundColor: useTheme.grey, minHeight: heightSize(height) },
+      ]}
       {...props}
     />
   );
@@ -26,11 +34,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: widthSize(360),
-    borderRadius: 10,
+    width: widthSize(350),
+    borderRadius: 20,
     paddingHorizontal: widthSize(10),
     paddingVertical: heightSize(10),
-    marginBottom: heightSize(5),
+    marginBottom: heightSize(14),
     ...Platform.select({
       ios: {
         shadowColor: '#000',

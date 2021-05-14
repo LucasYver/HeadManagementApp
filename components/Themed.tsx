@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { widthSize } from '../constants';
 import Colors from '../constants/Colors';
@@ -12,7 +12,18 @@ export function useThemeColor() {
 }
 
 export function Container(props: View['props']) {
-  return <View style={[styles.container, props.style]} {...props} />;
+  const useTheme = useThemeColor();
+  return (
+    <View
+      style={[styles.container, { backgroundColor: useTheme.primary }, props.style]}
+      {...props}
+    />
+  );
+}
+
+export function ThemeText(props: Text['props']) {
+  const useTheme = useThemeColor();
+  return <Text {...props} style={[{ color: useTheme.text }, props.style]} />;
 }
 
 const styles = StyleSheet.create({

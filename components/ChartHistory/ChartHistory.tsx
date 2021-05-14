@@ -1,51 +1,67 @@
+import dayjs from 'dayjs';
 import * as React from 'react';
 import { LineChart } from 'react-native-chart-kit';
 
-import { widthSize } from '../../constants';
+import { heightSize, widthSize } from '../../constants';
+import { History } from '../../types/History';
+import { useThemeColor } from '../Themed';
 
-const CharHistory = () => (
-  <LineChart
-    data={{
-      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-      datasets: [
-        {
-          data: [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-          ],
+type HistoryCardType = {
+  histories: History[];
+};
+
+const CharHistory: React.FC<HistoryCardType> = ({ histories }) => {
+  const useTheme = useThemeColor();
+
+  return (
+    <LineChart
+      data={{
+        labels: histories.map((history) => history.date),
+        datasets: [
+          {
+            data: histories.map((history) => history.balance),
+          },
+        ],
+      }}
+      width={widthSize(360)}
+      height={heightSize(220)}
+      withInnerLines={false}
+      withOuterLines={false}
+      withVerticalLines={false}
+      withHorizontalLines={false}
+      withVerticalLabels={false}
+      withHorizontalLabels
+      yAxisSuffix=' €'
+      yAxisInterval={1}
+      chartConfig={{
+        useShadowColorFromDataset: false,
+        backgroundColor: useTheme.primary,
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientToOpacity: 0,
+        backgroundGradientTo: useTheme.primary,
+        backgroundGradientFrom: useTheme.primary,
+        fillShadowGradient: useTheme.primary,
+        decimalPlaces: 0,
+        color: () => useTheme.secondary,
+        labelColor: () => useTheme.third,
+        style: {
+          borderRadius: 16,
         },
-      ],
-    }}
-    width={widthSize(360)}
-    height={220}
-    yAxisLabel='€'
-    yAxisInterval={1}
-    chartConfig={{
-      backgroundColor: '#e26a00',
-      backgroundGradientFrom: '#fb8c00',
-      backgroundGradientTo: '#ffa726',
-      decimalPlaces: 0, // optional, defaults to 2dp
-      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-      style: {
+        propsForDots: {
+          r: '4',
+          strokeWidth: '1',
+          stroke: useTheme.third,
+        },
+      }}
+      bezier
+      style={{
+        marginTop: 8,
         borderRadius: 16,
-      },
-      propsForDots: {
-        r: '6',
-        strokeWidth: '2',
-        stroke: '#ffa726',
-      },
-    }}
-    bezier
-    style={{
-      marginTop: 8,
-      borderRadius: 16,
-    }}
-  />
-);
+      }}
+      formatXLabel={(data) => dayjs(data).format('DD/MM')}
+      segments={3}
+    />
+  );
+};
 
 export default CharHistory;

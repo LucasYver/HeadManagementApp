@@ -6,14 +6,15 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Reporting: {
             screens: {
-              TabOneScreen: 'one',
+              ReportingScreen: 'reporting',
             },
           },
-          TabTwo: {
+          Platforms: {
             screens: {
-              TabTwoScreen: 'two',
+              PlatformsScreen: 'platforms',
+              DetailPlatformsScreen: 'detailPlatforms',
             },
           },
         },
